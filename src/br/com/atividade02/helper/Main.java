@@ -6,7 +6,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.TypedQuery;
 
 import br.com.atividade02.entity.Clientes;
 import br.com.atividade02.entity.Pedidos;
@@ -22,20 +21,36 @@ public class Main {
 		
 		Atividade02Helper fHelper = new Atividade02Helper(em);
 		
+		//alimenta objeto cliente para novo cadastro
 		Clientes clientes = new Clientes();
 		clientes.setNome("Papai noel nogueira");
 		clientes.setEmail("Papainoel@gmail.com");
 		
+		//id do cliente gerado
+		//System.out.println(clientes.getIdcliente());
+		
+		//alimenta objeto pedidos para novo cadastro
 		Pedidos pedidos = new Pedidos();
         pedidos.setData(new Date());
-        pedidos.setDescricao("trenó para 8 renas");
-        pedidos.setValor(1987.98);
+        pedidos.setDescricao("Renas de papai noel velozes (promoção)");
+        pedidos.setValor(1087.99);
 		
-		System.out.println(clientes.getIdcliente());
+		//persiste os cadastros no BD
+        fHelper.cadastrarCliente(clientes);
+        
+        //vincula um pedido pro cliente que acabou de ser cadastrado
+		fHelper.cadastrarPedido(clientes.getIdcliente(), pedidos);
 		
-        fHelper.salvar(clientes);
-		fHelper.vincularPedido(clientes.getIdcliente(), pedidos);
+        //vincula um pedido para um cliente fixo (teste para gerar N pedidos pro mesmo cliente)
+		fHelper.cadastrarPedido(1, pedidos);
+		
+        //vincula um pedido para um cliente fixo (teste para gerar N pedidos pro mesmo cliente)
+		fHelper.cadastrarPedido(2, pedidos);
+		
+        //vincula um pedido para um cliente fixo (teste para gerar N pedidos pro mesmo cliente)
+		fHelper.cadastrarPedido(3, pedidos);
 
+		
 		System.out.println("==============Lista dos clientes==============");
 		listarClientes(em);
 
@@ -47,6 +62,7 @@ public class Main {
 		
 	}
 
+	//consulta que lista todos os clientes cadastrados
 	private static void listarClientes(EntityManager em){ 
 		Atividade02Helper dao = new Atividade02Helper(em);
 		List<Clientes> clientes = dao.listarClientes(); 
@@ -55,12 +71,14 @@ public class Main {
 		}
 	}
 	
+	//consulta que busca um único cliente pelo ID
 	private static void findOnecliente(EntityManager em, Integer idcliente){ 
 		Atividade02Helper dao = new Atividade02Helper(em);
 		Clientes f = dao.findOnecliente(idcliente); 
 		System.out.println(f.getNome() + ": " + f.getEmail());
 	} 
 	
+	//consulta que lista todos os pedidos
 	private static void listarPedidos(EntityManager em){ 
 		Atividade02Helper dao = new Atividade02Helper(em);
 		List<Pedidos> pedidos = dao.listarPedidos(); 

@@ -15,13 +15,15 @@ import br.com.atividade02.entity.Pedidos;
 
 
 public class Atividade02Helper {
+	
 	private EntityManager em;
 
 	public Atividade02Helper(EntityManager em) {
 		this.em = em;
 	}
 
-	public String salvar(Clientes clientes) {
+	//Classe que cadastra um novo cliente
+	public String cadastrarCliente(Clientes clientes) {
 		try {
 			em.getTransaction().begin();
 			em.persist(clientes);
@@ -32,7 +34,8 @@ public class Atividade02Helper {
 		}
 	}
 
-	public String vincularPedido(int idCliente, Pedidos pedidos) {
+	//classe que cadatra um pedido 
+	public String cadastrarPedido(int idCliente, Pedidos pedidos) {
 		try {
 			Clientes c = em.find(Clientes.class, idCliente);
 			pedidos.setClientes(c);
@@ -46,7 +49,7 @@ public class Atividade02Helper {
 		}
 	}
 	
-	//JPQL: Usando Query
+    //consulta que lista todos os clientes cadastrados
 	@SuppressWarnings("unchecked")
 	public List<Clientes> listarClientes(){
 		TypedQuery<Clientes> tQuery = em.createQuery("select c from Clientes c", Clientes.class); 
@@ -60,6 +63,7 @@ public class Atividade02Helper {
 		return tQuery.getSingleResult(); 	
 	}
 	
+	//consulta todos os pedidos
 	@SuppressWarnings("unchecked")
 	public List<Pedidos> listarPedidos(){
 		TypedQuery<Pedidos> tQuery = em.createQuery("select p from Pedidos p", Pedidos.class); 
