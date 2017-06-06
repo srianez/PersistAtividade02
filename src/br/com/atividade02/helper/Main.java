@@ -40,15 +40,6 @@ public class Main {
         
         //vincula um pedido pro cliente que acabou de ser cadastrado
 		fHelper.cadastrarPedido(clientes.getIdcliente(), pedidos);
-		
-        //vincula um pedido para um cliente fixo (teste para gerar N pedidos pro mesmo cliente)
-		fHelper.cadastrarPedido(1, pedidos);
-		
-        //vincula um pedido para um cliente fixo (teste para gerar N pedidos pro mesmo cliente)
-		fHelper.cadastrarPedido(2, pedidos);
-		
-        //vincula um pedido para um cliente fixo (teste para gerar N pedidos pro mesmo cliente)
-		fHelper.cadastrarPedido(3, pedidos);
 
 		
 		System.out.println("==============Lista dos clientes==============");
